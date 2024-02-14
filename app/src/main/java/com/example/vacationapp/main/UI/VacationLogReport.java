@@ -23,7 +23,7 @@ public class VacationLogReport extends AppCompatActivity {
 
     private String endDate;
 
-
+    // Logging vacation information
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
