@@ -3,11 +3,15 @@ package com.example.vacationapp.main.UI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.vacationapp.R;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import database.Repository;
@@ -22,6 +26,10 @@ public class VacationLogReport extends AppCompatActivity {
     private String startDate;
 
     private String endDate;
+
+    private String information;
+
+    private String logInfo;
 
     // Logging vacation information
     @Override
@@ -44,11 +52,25 @@ public class VacationLogReport extends AppCompatActivity {
             startDate = vacationList.get(i).getVacationStartDate();
             endDate = vacationList.get(i).getVacationEndDate();
 
-            String information = name + "                   " + startDate + "                   " + endDate + "\n";
+            information = name + "                   " + startDate + "                   " + endDate + "\n";
+            logInfo += information;
 
             info.append(information);
         }
 
         Log.d("Vacation Report", "Vacation Information: \n" + repository.getVacations());
+        writeLogToFile(logInfo);
     }
+    public void writeLogToFile(String log) {
+        try {
+            File logFile = new File("/storage/emulated/0/Documents", "vacation_log.txt");
+            FileWriter writer = new FileWriter(logFile, true);
+            writer.append(log);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
