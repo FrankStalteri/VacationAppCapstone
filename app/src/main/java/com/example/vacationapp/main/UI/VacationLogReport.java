@@ -12,6 +12,9 @@ import com.example.vacationapp.R;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import database.Repository;
@@ -57,13 +60,23 @@ public class VacationLogReport extends AppCompatActivity {
 
             info.append(information);
         }
-
+        // Date reported generated
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         Log.d("Vacation Report", "Vacation Information: \n" + repository.getVacations());
-        writeLogToFile(logInfo);
+
+        writeLogToFile(logInfo + "\n" + "Report Generated: " + dateTimeFormatter.format(now));
     }
     public void writeLogToFile(String log) {
         try {
             File logFile = new File("/storage/emulated/0/Documents", "vacation_log.txt");
+
+            logFile.getParentFile().mkdirs();
+
+            if (!logFile.exists()) {
+                logFile.createNewFile();
+            }
+
             FileWriter writer = new FileWriter(logFile, true);
             writer.append(log);
             writer.flush();
