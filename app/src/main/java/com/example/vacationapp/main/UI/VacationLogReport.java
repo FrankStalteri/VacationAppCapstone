@@ -67,6 +67,7 @@ public class VacationLogReport extends AppCompatActivity {
 
         writeLogToFile(logInfo + "\n" + "Report Generated: " + dateTimeFormatter.format(now));
     }
+    // Write log to external file
     public void writeLogToFile(String log) {
         try {
             File logFile = new File("/storage/emulated/0/Documents", "vacation_log.txt");
